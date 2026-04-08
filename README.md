@@ -13,20 +13,21 @@ Each station checks its `station_mode` file on every boot. If the file contains 
 | Sukabumi | `pi/sukabumi/station_mode` | Solar (duty-cycles 10min ON / 5min OFF) |
 | Jakarta | `pi/jakarta/station_mode` | AC (always on) |
 
-## Switching to maintenance mode
+## Switching station mode (recommended)
+
+1. Go to **Actions** tab in this repo
+2. Click **Set Station Mode** in the left sidebar
+3. Click **Run workflow**
+4. Select the station and mode from the dropdowns
+5. Click **Run workflow**
+6. Wait for the station's next boot cycle (up to 15 minutes for Sukabumi)
+
+## Switching station mode (manual)
 
 1. Edit the station's `station_mode` file on GitHub (click the pencil icon)
-2. Change `production` to `maintenance`
+2. Change `production` to `maintenance` (or vice versa)
 3. Commit the change
-4. Wait for the station's next boot cycle (up to 15 minutes for Sukabumi)
-5. The station will stay awake and accessible via Pangolin/SSH
-
-## Switching back to production
-
-1. Edit the `station_mode` file
-2. Change `maintenance` to `production`
-3. Commit the change
-4. Reboot the station (or wait for the next power cycle)
+4. Wait for the station's next boot cycle
 
 ## Safety
 

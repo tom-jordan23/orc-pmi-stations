@@ -1,0 +1,42 @@
+name: Set Station Mode
+
+on:
+  workflow_dispatch:
+    inputs:
+      station:
+        description: "Station"
+        required: true
+        type: choice
+        options:
+          - sukabumi
+          - jakarta
+      mode:
+        description: "Mode"
+        required: true
+        type: choice
+        options:
+          - production
+          - maintenance
+
+jobs:
+  set-mode:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set station mode
+        run: echo "${{ inputs.mode }}" > "pi/${{ inputs.station }}/station_mode"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "pi/${{ inputs.station }}/station_mode"
+          if git diff --cached --quiet; then
+            echo "No change — station is already in ${{ inputs.mode }} mode"
+          else
+            git commit -m "Set ${{ inputs.station }} to ${{ inputs.mode }} mode"
+            git push
+          fi
